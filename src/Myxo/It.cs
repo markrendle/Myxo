@@ -1,16 +1,44 @@
 using System;
+using System.Threading.Tasks;
+using static Myxo.Writers;
 
 namespace Myxo
 {
-    public class It
+    public class It : Element
     {
-	    public It(string should, Action action)
+        private static readonly Task Completed = Task.FromResult(0);
+
+        public It(string text, Action action, Describe describe) : base(text, action)
         {
-            Should = should;
-            Action = action;
+            Describe = describe;
         }
 
-        public string Should { get; }
-        public Action Action { get; }
+        public Describe Describe { get; }
+
+        public override Task Run(Context context)
+        {
+            context.It = this;
+
+            try
+            {
+                Action();
+                Passed(this);
+            }
+            catch (AssertionException ex)
+            {
+                Failed(this, ex.Message);
+            }
+            finally
+            {
+                context.It = null;
+            }
+            
+            return Completed;
+        }
+
+        public override string ToString()
+        {
+            return $"{Describe} {Text}";
+        }
     }
 }
