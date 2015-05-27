@@ -43,6 +43,8 @@ namespace Calc.Test
 }
 ```
 
+**More examples:** [test/Myxo.Test/Program.cs](https://github.com/markrendle/Myxo/blob/master/test/Myxo.Test/Program.cs)
+
 ## Known issues
 
 * Coloring console output isn't working on my ElementaryOS with Mono 4.01.
