@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using static Myxo.Methods;
 
 namespace Myxo.Test
@@ -86,7 +88,31 @@ namespace Myxo.Test
                 It("should have been called twice", () => {
                     Expect(x).ToEqual(2);
                 });
-        });
+            });
+
+            Describe("Meta-Programming", () =>
+            {
+                var pairs = new Dictionary<string, string>
+                {
+                    { "abc", "cba" },
+                    { "banana", "ananab" }
+                };
+
+                foreach (var pair in pairs)
+                {
+                    It($"should correctly reverse '{pair.Key}'", () =>
+                    {
+                        Expect(Reverse(pair.Key)).ToEqual(pair.Value);
+                    });
+                }
+            });
+        }
+
+        private static string Reverse(string str)
+        {
+            var chars = str.ToCharArray();
+            Array.Reverse(chars);
+            return new String(chars);
         }
     }
 }

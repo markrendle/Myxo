@@ -43,6 +43,30 @@ namespace Calc.Test
 }
 ```
 
+One of the advantages to this code-based approach to declaring tests is that you can do meta-programmed tests, like this example which declares multiple `It`s in a loop:
+
+```csharp
+Describe("Meta-Programming", () =>
+{
+    var pairs = new Dictionary<string, string>
+    {
+        { "abc", "cba" },
+        { "banana", "ananab" }
+    };
+
+    foreach (var pair in pairs)
+    {
+        It($"should correctly reverse '{pair.Key}'", () =>
+        {
+            Expect(Reverse(pair.Key)).ToEqual(pair.Value);
+
+        	// Also notice we're taking advantage of
+        	// C# 6's new closures-in-loops rules :)
+        });
+    }
+});
+```
+
 **More examples:** [test/Myxo.Test/Program.cs](https://github.com/markrendle/Myxo/blob/master/test/Myxo.Test/Program.cs)
 
 ## Known issues
