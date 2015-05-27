@@ -30,6 +30,28 @@ namespace Myxo.Test
                 });
             });
 
+            Describe("Expect.ToBeNull", () =>
+            {
+                string s = null;
+                It("should pass when value is null", () =>
+                {
+                    Expect(s).ToBeNull();
+                });
+            });
+
+            Describe("Expect.Not", () =>
+            {
+                It("should negate Expect.ToEqual(x)", () =>
+                {
+                    Expect(54).Not.ToEqual(42);
+                });
+
+                It("should negate Expect.ToBeNull()", () =>
+                {
+                    Expect("").Not.ToBeNull();
+                });
+            });
+
             Describe("Before", () =>
             {
                 var x = 0;
